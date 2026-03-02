@@ -35,9 +35,9 @@ const deletTab = function(item, index){
       <el-icon size="20" class="fold-icon" @click="menuStore.menustateChange"><Fold /></el-icon>
       <ul class="flex-box">
         <li v-for="(item,index) in menuStore.selectedMenu" :key="index" class="tab flex-box" :class="{selected: item.path === route.path }">
-          <el-icon  class="fold-icon" size="12"><component :is="item.icon"></component></el-icon>
+          <el-icon  class="fold-icon" size="12"><component :is="item.meta.icon"></component></el-icon>
           <router-link :to="{path:item.path}" class="text flex-box">
-          {{ item.name }}
+          {{ item.meta.name }}
           </router-link>
           <el-icon class="fold-icon close"  size="12" @click="deletTab(item,index)"><close /></el-icon>
         </li>

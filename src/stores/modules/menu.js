@@ -14,7 +14,7 @@ export const useMenuStore = defineStore('menu', () => {
     }
   }
   const deletMenu = (item, index) => {
-    const i = selectedMenu.value.findIndex(val => val.name === item.name)
+    const i = selectedMenu.value.findIndex(val => val.meta.name === item.meta.name)
     selectedMenu.value.splice(i,1)
   }
   return {
