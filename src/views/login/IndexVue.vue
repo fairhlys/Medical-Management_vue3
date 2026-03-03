@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores';
 import { login, GetValidCode, RegisterCode } from '@/api/login'
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
+import { rules } from '@/utils/validate';
 const form = ref()
 const router = useRouter()
 const showState = ref(true)
@@ -66,44 +67,6 @@ const  register = async () => {
   } finally {
     registerstate.value = false
   }
-}
-const rules = {
-   phone: [
-    {
-      required: true,
-      message: '请输入手机号',
-      trigger: 'blur',
-    },
-    {
-      pattern: /^1[3-9]\d{9}$/,
-      message: '请输入正确的手机号',
-      trigger: 'blur',
-    }
-  ],
-  passWord: [
-    {
-      required: true,
-      message: '请输入密码',
-      trigger: 'blur',
-    },
-    {
-      pattern:/^\S{6,15}$/,
-      message: '密码必须是6-15位的非空字符',
-      trigger: 'change'
-    }
-  ],
-  validCode: [
-     {
-      required: true,
-      message: '请输入验证码',
-      trigger: 'blur',
-    },
-    {
-      pattern:/^\S{4}$/,
-      message: '验证码必须是4位的非空字符',
-      trigger: 'change'
-    }
-  ]
 }
 //发送短信
 const countdown = ref({

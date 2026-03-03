@@ -2,6 +2,7 @@
 import {defineExpose} from 'vue'
 import asideVue from '@/components/asideVue.vue'
 import navHeader from '@/components/navHeader.vue'
+import panelHead from '@/components/panelHead.vue'
 import {watch} from 'vue'
 import { useRoute } from 'vue-router'
 import { useMenuStore } from '@/stores'
@@ -25,7 +26,10 @@ watch(()=> route.path,() => {
       <!-- <el-aside width="200px">Aside</el-aside> -->
        <asideVue></asideVue>
       <el-container>
-        <el-header><navHeader></navHeader></el-header>
+        <el-header >
+          <navHeader></navHeader>
+          <panelHead></panelHead>
+        </el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -36,5 +40,14 @@ watch(()=> route.path,() => {
 <style lang="scss" scoped>
 .common-layout {
   height: 100vh;
+  .panel-heading {
+    margin: 10px;
+  }
+  .el-container{
+    height: 100%;
+  }
+  .el-header {
+    height: 100px !important
+  }
 }
 </style>

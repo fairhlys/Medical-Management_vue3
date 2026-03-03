@@ -38,7 +38,6 @@ const handleClose = () => {
 <style scoped lang="less">
 .aside-container {
   width: 200px;
-  height: 100vh;
   .logo-lg {
     font-size: 20px;
     text-align: center;

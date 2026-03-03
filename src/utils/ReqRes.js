@@ -35,11 +35,12 @@ request.interceptors.request.use(function (config) {
     const whiltUrl = ['/login','/get/code','/user/authentication']
     if (whiltUrl.includes(config.url)) {
       // 白名单接口：加 terminal，不需要 token
-      config.headers.terminal = 'h5'  // 或 'app'、'mini' 等，根据你的实际值
+      // config.headers.terminal = 'h5'  // 或 'app'、'mini' 等，根据你的实际值
     } else {
       // 其他接口：需要加 x-token
       if (userStore.token) {
         config.headers['x-token'] = userStore.token
+
         // 或 config.headers.Authorization = `Bearer ${userStore.token}`
         // 看后端要求用哪种（x-token 或 Authorization）
       }
@@ -67,6 +68,13 @@ request.interceptors.response.use(
     const res = response.data
     if (res.code === 10000) {
       return res  // 成功直接返回 data
+    }
+    if(res.code === -2) {
+      ElMessage.error('登录已过期，请重新登录')
+      userStore.clearUserInfo?.()
+      userStore.setToken('')
+      router.push('/login')
+      return Promise.reject(res)
     }
 
     // 业务错误

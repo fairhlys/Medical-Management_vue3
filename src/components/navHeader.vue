@@ -2,10 +2,7 @@
 import { useMenuStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 const route = useRoute()
-console.log(route);
-
 const router = useRouter()
-console.log(route.path);
 const menuStore = useMenuStore()
 const deletTab = function(item, index){
   if(route.path !== item.path){
@@ -69,7 +66,7 @@ const deletTab = function(item, index){
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 50%;
   background-color: #fff;
   padding: 0 10px;
   .header-left {
