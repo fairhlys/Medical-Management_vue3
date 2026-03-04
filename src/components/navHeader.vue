@@ -1,9 +1,10 @@
 <script setup>
 import { useMenuStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '@/stores';
+import { useUserStore,useAuthStore } from '@/stores';
 import { ElMessage } from 'element-plus';
 const userStore = useUserStore()
+const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 const menuStore = useMenuStore()
@@ -12,7 +13,6 @@ const deletTab = function(item, index){
     menuStore.deletMenu(item,index)
     return
   }
-  console.log(menuStore.selectedMenu,index);
   if(index === (menuStore.selectedMenu.length - 1 )){
     if(menuStore.selectedMenu.length === 1){
       menuStore.deletMenu(item,index)
@@ -33,6 +33,8 @@ const handleCommand = (command) => {
   if(cmd === '退出登录'){
     userStore.removeToken()
     userStore.clearUserInfo()
+    auth.clearAuth()
+    menuStore.clearMenu()
     router.push('/login')
     ElMessage.success(`${command}成功`)
   }

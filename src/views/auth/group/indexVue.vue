@@ -1,8 +1,10 @@
 <script setup>
-import { ref, onMounted} from 'vue'
+import { ref, onMounted,watch} from 'vue'
+import { useRoute } from 'vue-router'
 import { groupGetList } from '@/api/groups'
 import GroupDialog from '../components/GroupDialog.vue'
 import { Plus } from '@element-plus/icons-vue'
+const route = useRoute()
 const page = ref({
   pageNum:1,
   pageSize:10
@@ -10,9 +12,14 @@ const page = ref({
 const listdata = ref([])
 let totalNum = ''
 const dialog = ref()
-onMounted( async ()=> {
+const init = async () => {
   getListData()
-})
+}
+onMounted(init)
+watch(
+  () => route.path,
+  init
+)
 const onADD = () => {
   dialog.value.open({
     show:false,

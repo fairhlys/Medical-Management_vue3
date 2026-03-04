@@ -16,8 +16,6 @@ watch(()=> route.path,() => {
     path:route.path,
     meta:route.meta
   })
-},{
-  immediate:true
 })
 </script>
 <template>

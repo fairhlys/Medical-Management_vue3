@@ -1,16 +1,12 @@
 <script setup>
 import treeMenu from './treeMenu.vue';
-import { defineExpose } from 'vue'
-import { useRouter,useRoute } from 'vue-router';
-import { reactive } from 'vue';
-import { useMenuStore } from '@/stores/modules/menu';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+import { useMenuStore,useAuthStore } from '@/stores';
 const menuStore = useMenuStore();
-const router = useRouter();
 const route = useRoute()
-const menudata = reactive(router.options.routes[0].children);
-defineExpose({
-  name: 'AsideVue'
-})
+const authStore = useAuthStore()
+const menudata = computed(() => authStore.route)
 const handleOpen = () => {
 
 }

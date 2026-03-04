@@ -22,6 +22,6 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return { token, setToken, removeToken, userInfo, setUserInfo, clearUserInfo }
-}, {
-  persist: true
+},{
+  persist:true
 })

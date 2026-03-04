@@ -1,8 +1,10 @@
 <script setup>
  import { adminGetList,adminMenuData } from '@/api/admin';
- import { ref,onMounted } from 'vue'
+ import { ref,onMounted,watch } from 'vue'
+ import { useRoute } from 'vue-router';
  import AdminDialog from '../components/AdminDialog.vue';
 import dayjs from 'dayjs';
+const route = useRoute()
  const page = ref({
   pageNum:1,
   pageSize:10
@@ -32,10 +34,17 @@ const permissionName  = (id) => {
   const data = options.value?.data?.find(el => el.id === id)
   return data ? data.name : '超级管理员'
 }
-onMounted( async () => {
- getListData()
+const init = async () => {
+  getListData()
  options.value = await adminMenuData()
-})
+}
+
+onMounted(init)
+
+watch(
+  () => route.path,
+  init
+)
 const getListData = async () => {
   const res = await adminGetList(page.value)
   listdata.value = res.data.list

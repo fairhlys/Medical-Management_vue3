@@ -2,11 +2,12 @@
 import {ref,onBeforeUnmount} from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 // import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/stores';
-import { login, GetValidCode, RegisterCode } from '@/api/login'
+import { useUserStore,useAuthStore } from '@/stores';
+import { login, GetValidCode, RegisterCode,getmenuData } from '@/api/login'
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { rules } from '@/utils/validate';
+const auth = useAuthStore()
 const form = ref()
 const router = useRouter()
 const showState = ref(true)
@@ -38,6 +39,12 @@ const LoginHandle = async function(){
     }
     userStore.setToken(res.data.token)
     userStore.setUserInfo(res.data.userInfo)
+    const menu = await getmenuData()
+    auth.setAuth(menu.data)
+    auth.route.forEach(ele => {
+      router.addRoute('main',ele)
+    })
+    router.replace(router.currentRoute.value.fullPath)
     ElMessage.success('登陆成功')
     router.push('/')
   } catch(err) {

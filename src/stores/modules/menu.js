@@ -9,7 +9,7 @@ export const useMenuStore = defineStore('menu', () => {
     menuState.value = !menuState.value
   }
   const addMenu = function(playload){
-    if( selectedMenu.value.findIndex(item => item.path === playload.path ) === -1) {
+    if( selectedMenu.value.findIndex(item => item.path === playload.path ) === -1 && playload.path !=='/') {
       selectedMenu.value.push(playload)
     }
   }
@@ -17,8 +17,13 @@ export const useMenuStore = defineStore('menu', () => {
     const i = selectedMenu.value.findIndex(val => val.meta.name === item.meta.name)
     selectedMenu.value.splice(i,1)
   }
-  return {
-    menuState,menustateChange,selectedMenu,addMenu,deletMenu
+  function clearMenu() {
+    selectedMenu.value = []
   }
+  return {
+    menuState,menustateChange,selectedMenu,addMenu,deletMenu,clearMenu
+  }
+},{
+  persist:true
 })
 

@@ -19,3 +19,6 @@ export const RegisterCode = (data) => {
     validCode: data.validCode
   })
 }
+export const getmenuData = () => {
+  return req.get('/menu/permissions')
+}
