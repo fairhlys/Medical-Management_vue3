@@ -1,6 +1,9 @@
 <script setup>
 import { useMenuStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
+import { useUserStore } from '@/stores';
+import { ElMessage } from 'element-plus';
+const userStore = useUserStore()
 const route = useRoute()
 const router = useRouter()
 const menuStore = useMenuStore()
@@ -24,7 +27,16 @@ const deletTab = function(item, index){
       router.push(menuStore.selectedMenu[index].path)
   }
 }
-
+const handleCommand = (command) => {
+  // remove extra whitespace just in case
+  const cmd = command && command.toString().trim();
+  if(cmd === '退出登录'){
+    userStore.setToken('')
+    userStore.userInfo = ''
+    router.push('/login')
+    ElMessage.success(`${command}成功`)
+  }
+}
 </script>
 <template>
   <div class="header-container">
@@ -41,14 +53,14 @@ const deletTab = function(item, index){
       </ul>
     </div>
     <div class="header-right">
-    <el-dropdown>
+    <el-dropdown @command="handleCommand">
       <span class="flex-box">
-       <el-avatar :size="30" src="" />
-       <p class="user-name">admin</p>
+       <el-avatar :size="30" :src="userStore.userInfo.avatar" />
+       <p class="user-name">{{ userStore.userInfo.name }}</p>
       </span>
-      <template #dropdown>
-       <el-dropdown-menu>
-         <el-dropdown-item>Action 1</el-dropdown-item>
+      <template #dropdown >
+       <el-dropdown-menu >
+         <el-dropdown-item command="退出登录">退出登录</el-dropdown-item>
          <el-dropdown-item>Action 2</el-dropdown-item>
        </el-dropdown-menu>
       </template>

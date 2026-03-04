@@ -10,3 +10,9 @@ export const adminGetList = ({pageNum,pageSize}) => {
 export const adminMenuData = () =>{
   return req.get('/menu/selectlist')
 }
+export const adminUpdate = ({name, permissions_id}) => {
+  return req.post('/update/user',{
+    name,
+    permissions_id
+  })
+}

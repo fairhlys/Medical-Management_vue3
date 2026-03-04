@@ -36,8 +36,9 @@ const getListData = async () => {
   listdata.value = res.data.list
   totalNum = res.data.total
 }
-const handleSizeChange = () => {
-
+const handleSizeChange = (val) => {
+  page.value.pageSize = val
+  getListData()
 }
 const handleCurrentChange = (val) => {
   page.value.pageNum = val
