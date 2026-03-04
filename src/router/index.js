@@ -54,10 +54,13 @@ const router = createRouter({
     }
   ]
 })
-router.beforeEach( async (to, from) => {
-const useStore = useUserStore()
-  if (!useStore.token && to.path !== '/login') {
+router.beforeEach(async (to) => {
+  const userStore = useUserStore()
+  if (!userStore.token && to.path !== '/login') {
     return '/login'
+  }
+  if (userStore.token && to.path === '/login') {
+    return '/'
   }
   return true
 })
