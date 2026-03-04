@@ -31,8 +31,8 @@ const handleCommand = (command) => {
   // remove extra whitespace just in case
   const cmd = command && command.toString().trim();
   if(cmd === '退出登录'){
-    userStore.setToken('')
-    userStore.userInfo = ''
+    userStore.removeToken()
+    userStore.clearUserInfo()
     router.push('/login')
     ElMessage.success(`${command}成功`)
   }

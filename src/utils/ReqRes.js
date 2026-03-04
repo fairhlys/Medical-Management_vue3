@@ -14,10 +14,9 @@ const request = axios.create({
     // 这里不要放任何 token 或 terminal，全部在拦截器里动态加
   }
 })
-const userStore = useUserStore()
-
 // 添加请求拦截器
 request.interceptors.request.use(function (config) {
+    const userStore = useUserStore()
     // 在发送请求之前做些什么
     if (config.showLoading !== false) {
       loadingCount++
@@ -32,8 +31,8 @@ request.interceptors.request.use(function (config) {
 
 
     // ──────────────── 核心：根据 url 动态添加不同的 header ────────────────
-    const whiltUrl = ['/login','/get/code','/user/authentication']
-    if (whiltUrl.includes(config.url)) {
+    const whiteUrl = ['/login', '/get/code', '/user/authentication']
+    if (whiteUrl.includes(config.url)) {
       // 白名单接口：加 terminal，不需要 token
       // config.headers.terminal = 'h5'  // 或 'app'、'mini' 等，根据你的实际值
     } else {
@@ -69,10 +68,11 @@ request.interceptors.response.use(
     if (res.code === 10000) {
       return res  // 成功直接返回 data
     }
-    if(res.code === -2) {
+    if (res.code === -2) {
+      const userStore = useUserStore()
       ElMessage.error('登录已过期，请重新登录')
-      userStore.clearUserInfo?.()
-      userStore.setToken('')
+      userStore.clearUserInfo()
+      userStore.removeToken()
       router.push('/login')
       return Promise.reject(res)
     }
@@ -89,8 +89,10 @@ request.interceptors.response.use(
 
     // 401 处理
     if (error.response?.status === 401) {
+      const userStore = useUserStore()
       ElMessage.error('登录已过期，请重新登录')
-      userStore.clearUserInfo?.() // 清空用户信息
+      userStore.clearUserInfo()
+      userStore.removeToken()
       router.push('/login')
     } else {
       ElMessage.error(error.message || '网络异常')
