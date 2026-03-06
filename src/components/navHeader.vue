@@ -63,7 +63,6 @@ const handleCommand = (command) => {
       <template #dropdown >
        <el-dropdown-menu >
          <el-dropdown-item command="退出登录">退出登录</el-dropdown-item>
-         <el-dropdown-item>Action 2</el-dropdown-item>
        </el-dropdown-menu>
       </template>
     </el-dropdown>

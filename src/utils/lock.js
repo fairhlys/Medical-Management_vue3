@@ -6,7 +6,7 @@ export function createRequestLock(fn) {
     pending = true
 
     try {
-      return await fn(...args)
+      return await fn.apply(this, args)
     } finally {
       pending = false
     }
