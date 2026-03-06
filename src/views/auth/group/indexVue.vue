@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted,watch} from 'vue'
 import { useRoute } from 'vue-router'
+import NoData from '@/components/NoData.vue'
 import { groupGetList } from '@/api/groups'
 import GroupDialog from '../components/GroupDialog.vue'
 import { Plus } from '@element-plus/icons-vue'
@@ -55,7 +56,7 @@ const handleCurrentChange = (val) => {
 <template>
   <GroupDialog ref="dialog"  @statechange="statechange"></GroupDialog>
   <el-button :icon="Plus" type="primary" @click="onADD">新增</el-button>
-  <el-table :data="listdata">
+  <el-table :data="listdata" v-if="listdata && listdata.length > 0">
     <el-table-column prop="id" label="ID" ></el-table-column>
     <el-table-column prop="name" label="昵称" ></el-table-column>
     <el-table-column prop="permissionName" label="菜单权限" ></el-table-column>
@@ -65,7 +66,8 @@ const handleCurrentChange = (val) => {
       </template>
     </el-table-column>
   </el-table>
-  <div class="pagination-info">
+  <no-data v-else></no-data>
+  <div class="pagination-info" v-if="listdata && listdata.length > 0">
     <el-pagination
       v-model:current-page="page.pageNum"
       :page-size="page.pageSize"
@@ -79,4 +81,5 @@ const handleCurrentChange = (val) => {
   </div>
 
 </template>
-<style scoped lang="less"></style>
+<style scoped lang="less">
+</style>

@@ -100,7 +100,6 @@ router.beforeEach(async (to) => {
 
   return true
 })
-window.router = router
 // 用户鉴权和全局路由守卫和刷新恢复机制
 export default router
 

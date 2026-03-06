@@ -2,6 +2,7 @@
  import { adminGetList,adminMenuData } from '@/api/admin';
  import { ref,onMounted,watch } from 'vue'
  import { useRoute } from 'vue-router';
+ import NoData from '@/components/NoData.vue';
  import AdminDialog from '../components/AdminDialog.vue';
 import dayjs from 'dayjs';
 const route = useRoute()
@@ -63,7 +64,7 @@ const handleCurrentChange = (val) => {
 }
  </script>
 <template>
-  <el-table :data="listdata">
+  <el-table :data="listdata" v-if="listdata && listdata.length > 0">
     <el-table-column prop="id" label="ID" ></el-table-column>
     <el-table-column prop="name" label="昵称" ></el-table-column>
     <el-table-column prop="permissions_id" label="所属组别" >
@@ -91,8 +92,9 @@ const handleCurrentChange = (val) => {
       </template>
     </el-table-column>
   </el-table>
+  <no-data v-else></no-data>
   <AdminDialog ref="dialog" :options="options" @statechange="statechange"></AdminDialog>
-  <div class="pagination-info">
+  <div class="pagination-info" v-if="listdata && listdata.length > 0">
     <el-pagination
       v-model:current-page="page.pageNum"
       :page-size="page.pageSize"

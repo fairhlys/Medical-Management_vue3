@@ -38,8 +38,20 @@ export const rules = {
   name: [
     {
       required: true,
-      message:'请输入权限名称',
+      message:'请输入名称',
       trigger:'blur'
     }
+  ],
+  avatar:[
+    { required: true, message: '请上传头像', trigger: 'change' }
+  ],
+  sex:[
+    { required: true, message: '请选择性别', trigger: 'change' }
+  ],
+  age:[
+    { required: true, message: '请输入年龄', trigger: 'blur' }
+  ],
+  active:[
+    { required: true, message: '请选择是否生效', trigger: 'change' }
   ]
 }
