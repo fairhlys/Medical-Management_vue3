@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseURL = 'https://v3pz.itndedu.com/v3pz'
+const baseURL = import.meta.env.VITE_API_BASE || 'https://v3pz.itndedu.com/v3pz'  // 从环境变量读取基础 URL，提供默认值
 import { ElMessage } from 'element-plus';
 import { ElLoading } from 'element-plus'  // 手动导入服务（即使你用了 auto-import，这里建议显式导入以清晰）
 import router from '@/router';

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore,useAuthStore } from '@/stores'
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(), //在生产环境中使用 history 模式。用法是 createWebHistory()，在开发环境中使用 hash 模式。用法是 createWebHashHistory()。
   routes:[
     {
       path:'/',
