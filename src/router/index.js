@@ -70,33 +70,39 @@ router.beforeEach(async (to) => {
   const userStore = useUserStore()
   const authStore = useAuthStore()
 
-  if (!userStore.token && to.path !== '/login') {
-    return '/login'
+  const hasToken = Boolean(userStore.token)
+  const hasAuth = Array.isArray(authStore.auth) && authStore.auth.length > 0
+
+  // 未登录：除 /login 外一律去登录页
+  if (!hasToken) {
+    if (to.path !== '/login') return { path: '/login', replace: true }
+    return true
   }
 
-  if (userStore.token && to.path === '/login') {
-    return '/'
+  // 已登录：访问登录页则回首页
+  if (to.path === '/login') {
+    return { path: '/', replace: true }
   }
 
+  // 有 token 但没有权限数据：视为异常登录态，回登录页
+  if (!hasAuth) {
+    return { path: '/login', replace: true }
+  }
 
-  // ⭐ 关键：刷新恢复动态路由
-  if (userStore.token && authStore.auth.length && !isAddRoute) {
+  // 刷新恢复动态路由
+  if (!isAddRoute) {
+    authStore.route = authStore.generateRoutes(authStore.auth)
+    authStore.route.forEach(r => router.addRoute('main', r))
+    isAddRoute = true
 
-  // ⭐ 重新生成 routes
-  authStore.route = authStore.generateRoutes(authStore.auth)
-  authStore.route.forEach(r => {
-    router.addRoute('main', r)
-  })
-  isAddRoute = true
-  if (to.path === '/') {
-    const first = authStore.auth[0]
-    if (first?.children?.length > 0) {
-      return { name: first.children[0].name }
+    if (to.path === '/') {
+      const first = authStore.auth[0]
+      if (first?.children?.length > 0) return { name: first.children[0].name, replace: true }
+      return { name: first.name, replace: true }
     }
-    return { name: first.name }
+
+    return { ...to, replace: true }
   }
-  return { ...to, replace: true }
-}
 
   return true
 })
