@@ -42,3 +42,11 @@ pnpm build
 ```sh
 pnpm lint
 ```
+
+## CI/CD 快速入口
+
+- 工作流文件：`.github/workflows/ci-cd.yml`
+- 学习文档（推荐）：[`docs/ci-cd-guide.md`](docs/ci-cd-guide.md)
+
+如果你想系统学习“我有一个 Vue + Vite 项目，应该如何做 CI/CD”，请直接按学习文档从 **概念 -> 配置 -> 触发 -> 排查 -> 进阶** 的顺序实践。
+

@@ -13,7 +13,7 @@ export const useMenuStore = defineStore('menu', () => {
       selectedMenu.value.push(playload)
     }
   }
-  const deletMenu = (item, index) => {
+  const deletMenu = item => {
     const i = selectedMenu.value.findIndex(val => val.meta.name === item.meta.name)
     selectedMenu.value.splice(i,1)
   }
